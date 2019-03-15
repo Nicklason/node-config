@@ -8,14 +8,14 @@ module.exports = Config;
 /**
  * Config constructor
  * @param {Object} options
- * @param {String} options.dataDirectory The directory to save the config in
+ * @param {String} options.directory The directory to save the config in
  * @param {String} [options.filename] Name of the config - `config.json` by default (may not contain slashes or similar)
  * @param {Number} [options.timeout] Amount of milliseconds to wait until saving the config - `0` by default
  * @param {Boolean} [options.watch] Watches the config file for changes made by other processes - `true` by default
  */
 function Config (options) {
-    if (!options.dataDirectory) {
-        throw new Error('Missing dataDirectory option');
+    if (!options.directory) {
+        throw new Error('Missing directory option');
     }
 
     Object.defineProperty(this, 'data', {
@@ -32,7 +32,7 @@ function Config (options) {
     this.timeout = options.timeout || 0;
     this.watch = options.hasOwnProperty('watch') ? options.watch : true;
 
-    this.storage = new FileManager(options.dataDirectory);
+    this.storage = new FileManager(options.directory);
 
     this._data = {};
     this._timeout = null;

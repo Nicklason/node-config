@@ -8,7 +8,7 @@ Get and set config values
 const Config = require('@nicklason/config');
 
 const config = new Config({
-    dataDirectory: './', // Use current working directory
+    directory: './', // Use current working directory
     filename: 'config.json', // The config will be named config.json
     timeout: 0 // The config will be saved right as it changes in memory
 });
@@ -44,7 +44,7 @@ Watch for changes by other processes.
 const Config = require('../');
 
 const config = new Config({
-    dataDirectory: './',
+    directory: './',
     filename: 'config.json',
     watch: true // Watch the data directory for changes to the config by other processes
 });
