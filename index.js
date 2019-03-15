@@ -27,7 +27,6 @@ function Config (options) {
         }
     });
 
-    this.ready = false;
     this.changed = false;
     this.filename = options.filename || 'options.json';
     this.timeout = options.timeout || 0;
@@ -61,8 +60,6 @@ Config.prototype.init = function (callback) {
         if (result !== undefined) {
             this._data = result;
         }
-
-        this.ready = true;
 
         callback(null);
     });
