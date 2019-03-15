@@ -37,3 +37,19 @@ setTimeout(function () {
     });
 }, 1000);
 ```
+
+Watch for changes by other processes.
+
+```js
+const Config = require('../');
+
+const config = new Config({
+    dataDirectory: './',
+    filename: 'config.json',
+    watch: true // Watch the data directory for changes to the config by other processes
+});
+
+config.on('change', function () {
+    console.log('Config was modified by a different process');
+});
+```
