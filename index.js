@@ -168,9 +168,6 @@ Config.prototype._watchDirectory = function () {
 Config.prototype._persistToDisk = function (callback) {
     // Remove timeout
     this._timeout = null;
-    if (this.watch) {
-        this._watch.close();
-    }
 
     // Only save if the data has changed
     if (!this.changed) {
@@ -179,9 +176,22 @@ Config.prototype._persistToDisk = function (callback) {
     }
 
     const json = JSON.stringify(this._data);
+    const hash = md5(json);
+
+    if (this._md5 !== null && this._md5 === hash) {
+        // The config did not change, don't save it
+        callback(null);
+        return;
+    }
+
+    if (this.watch) {
+        this._watch.close();
+    }
+
     this.storage.writeFile(this.filename, json, (err) => {
         if (!err) {
             this.changed = false;
+            this._md5 = hash;
         }
 
         if (this.watch) {
