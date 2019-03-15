@@ -1,0 +1,29 @@
+{
+  "name": "@nicklason/config",
+  "version": "1.0.0",
+  "description": "Get and set config values",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "release": "np --no-cleanup --no-publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nicklason/node-config.git"
+  },
+  "author": {
+    "name": "Nicklas Marc Pedersen",
+    "url": "https://nicklas.io"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nicklason/node-config/issues"
+  },
+  "homepage": "https://github.com/Nicklason/node-config#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-google": "^0.12.0",
+    "nodemon": "^1.18.10"
+  }
+}
