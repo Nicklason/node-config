@@ -1,6 +1,6 @@
 {
   "name": "@nicklason/config",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Get and set config values",
   "main": "index.js",
   "scripts": {
