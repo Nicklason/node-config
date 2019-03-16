@@ -233,21 +233,22 @@ Config.prototype._getFromDisk = function (callback) {
             return callback(err);
         }
 
-        const parsed = parseJSON(result);
-        if (parsed === null) {
+        const newData = parseJSON(result);
+        if (newData === null) {
             return callback(new Error('The config is corrupt / using invalid JSON syntax'));
         }
 
         const hash = md5(result);
 
         if (this._md5 !== null && this._md5 !== hash) {
-            this._data = parsed;
-            this.emit('change');
+            const oldData = this._data;
+            this._data = newData;
+            this.emit('change', oldData, newData);
         }
 
         this._md5 = hash;
 
-        callback(null, parsed);
+        callback(null, newData);
     });
 };
 
