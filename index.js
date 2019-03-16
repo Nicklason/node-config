@@ -35,6 +35,7 @@ function Config (options) {
     this.storage = new FileManager(options.directory);
 
     this._data = {};
+
     this._timeout = null;
     this._md5 = null;
 
@@ -117,6 +118,23 @@ Config.prototype.set = function (key, value) {
     }
 
     this._data[key] = value;
+    this.changed = true;
+
+    if (this.timeout !== undefined) {
+        this._waitPersist();
+    }
+};
+
+/**
+ * Removes a key from the config
+ * @param {String} key
+ */
+Config.prototype.del = Config.prototype.delete = Config.prototype.remove = function (key) {
+    if (key === undefined) {
+        return;
+    }
+
+    delete this._data[key];
     this.changed = true;
 
     if (this.timeout !== undefined) {
