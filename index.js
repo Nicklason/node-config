@@ -23,7 +23,9 @@ function Config (options) {
             return this._data;
         },
         set: function (newData) {
+            const oldData = this._data;
             this.replace(newData);
+            return oldData;
         }
     });
 
@@ -111,11 +113,14 @@ Config.prototype.get = function (key, defaultValue) {
  * Sets the key in the config and saves to disk
  * @param {String} key
  * @param {*} value
+ * @return {*} Old value
  */
 Config.prototype.set = function (key, value) {
     if (key === undefined) {
         return;
     }
+
+    const oldValue = this._data[key];
 
     this._data[key] = value;
     this.changed = true;
@@ -123,16 +128,21 @@ Config.prototype.set = function (key, value) {
     if (this.timeout !== undefined) {
         this._waitPersist();
     }
+
+    return oldValue;
 };
 
 /**
- * Removes a key from the config
+ * Removes a key from the config, returns the value of the key
  * @param {String} key
+ * @return {*} Old value
  */
 Config.prototype.del = Config.prototype.delete = Config.prototype.remove = function (key) {
     if (key === undefined) {
         return;
     }
+
+    const value = this._data[key];
 
     delete this._data[key];
     this.changed = true;
@@ -140,23 +150,30 @@ Config.prototype.del = Config.prototype.delete = Config.prototype.remove = funct
     if (this.timeout !== undefined) {
         this._waitPersist();
     }
+
+    return value;
 };
 
 /**
  * Replaces the config with a new object
- * @param {Object} data
+ * @param {Object} newData
+ * @return {Object} Old data
  */
-Config.prototype.replace = function (data) {
-    if (data === undefined) {
+Config.prototype.replace = function (newData) {
+    if (newData === undefined) {
         return;
     }
 
-    this._data = data;
+    const oldData = this._data;
+
+    this._data = newData;
     this.changed = true;
 
     if (this.timeout !== undefined) {
         this._waitPersist();
     }
+
+    return oldData;
 };
 
 /**
